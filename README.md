@@ -22,7 +22,7 @@ Facebook'ta **Önerilen Arkadaşlar**, grup üyeleri ve benzeri listelerdeki ki�
 
 ## 🚀 Kurulum
 
-1. [Kurulum sayfasını](https://github.com/efekanerdogan/facebooknetwork) açın.
+1. [Kurulum sayfasını](https://efekanerdogan.github.io/facebooknetwork/) açın.
 2. **🦊 FB Network Genişletici** butonunu fareyle tutup tarayıcınızın **Yer İmleri Çubuğuna** sürükleyin. (Çubuk görünmüyorsa `Ctrl + Shift + B`.)
 
 **Alternatifler:**
