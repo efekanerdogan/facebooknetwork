@@ -1,423 +1,1059 @@
 <!DOCTYPE html>
-<html lang="tr" class="scroll-smooth">
+<html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oto Arkadaş Ekleme Kurulumu | Premium</title>
-    <link rel="icon" href="https://efekanerdogan.com/images/logo.png" type="image/png">
-    
-    <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- TAILWIND CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- TAILWIND CONFIG -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        fb: {
-                            blue: '#1877f2',
-                            hover: '#166fe5',
-                            dark: '#18191a',
-                            card: '#242526',
-                            border: '#3e4042',
-                            text: '#e4e6eb',
-                            muted: '#b0b3b8'
-                        }
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'slide-up': 'slideUp 0.4s ease-out forwards',
-                        'march': 'march 20s linear infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        pulseGlow: {
-                            '0%, 100%': { opacity: 1, boxShadow: '0 0 20px -5px rgba(24, 119, 242, 0.4)' },
-                            '50%': { opacity: .7, boxShadow: '0 0 30px 5px rgba(24, 119, 242, 0.6)' },
-                        },
-                        slideUp: {
-                            '0%': { opacity: 0, transform: 'translateY(20px)' },
-                            '100%': { opacity: 1, transform: 'translateY(0)' },
-                        },
-                        march: {
-                            'to': { strokeDashoffset: '-400' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Facebook Network Genişletici · Kurulum</title>
+<meta name="description" content="Facebook'ta önerilen arkadaşlara ve grup üyelerine kontrollü şekilde arkadaşlık isteği gönderen, kurulum gerektirmeyen yer imi (bookmarklet) aracı.">
+<meta name="theme-color" content="#070b14">
+<meta property="og:title" content="Facebook Network Genişletici">
+<meta property="og:description" content="Tek tıkla açılan, sürüklenebilir ve kontrollü arkadaş ekleme paneli. Eklenti yok, kurulum yok.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%231877f2'/%3E%3Ctext x='50' y='68' font-size='56' text-anchor='middle'%3E%F0%9F%A6%8A%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- CUSTOM CSS -->
-    <style>
-        body {
-            background-color: #0f172a;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(24, 119, 242, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
-            background-attachment: fixed;
-            color: #e4e6eb;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+<style>
+:root {
+    --bg: #070b14;
+    --bg-2: #0d1424;
+    --surface: rgba(255, 255, 255, 0.04);
+    --surface-2: rgba(255, 255, 255, 0.07);
+    --line: rgba(255, 255, 255, 0.09);
+    --text: #e8ebf2;
+    --muted: #94a3b8;
+    --dim: #64748b;
+    --blue: #1877f2;
+    --blue-2: #3b8cff;
+    --violet: #8b5cf6;
+    --green: #22c55e;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --radius: 20px;
+    color-scheme: dark;
+}
 
-        /* Glassmorphism Classes */
-        .glass-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-        .glass-step {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
+body {
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
 
-        .glass-step:hover {
-            background: rgba(30, 41, 59, 0.8);
-            border-color: rgba(24, 119, 242, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 0 15px -3px rgba(24, 119, 242, 0.15);
-        }
+/* Aurora arka plan */
+body::before, body::after {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    width: 60vmax;
+    height: 60vmax;
+    border-radius: 50%;
+    filter: blur(110px);
+    opacity: 0.35;
+    pointer-events: none;
+}
+body::before { top: -25vmax; left: -15vmax; background: radial-gradient(circle, #1877f2, transparent 65%); animation: drift 22s ease-in-out infinite alternate; }
+body::after { bottom: -30vmax; right: -20vmax; background: radial-gradient(circle, #8b5cf6, transparent 65%); animation: drift 28s ease-in-out infinite alternate-reverse; }
+@keyframes drift { to { transform: translate(6vmax, 4vmax) scale(1.1); } }
 
-        /* Draggable Pill SVG Border Animation */
-        .draggable-pill-wrapper {
-            position: relative;
-            display: inline-block;
-            cursor: grab;
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        .draggable-pill-wrapper:active {
-            cursor: grabbing;
-            transform: scale(0.95);
-        }
+a { color: inherit; text-decoration: none; }
+.wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+section { padding: 72px 0; }
 
-        .draggable-svg-border {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            border-radius: 9999px;
-        }
+/* ---------- NAV ---------- */
+nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(7, 11, 20, 0.7);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+}
+.nav-in { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -0.01em; }
+.brand-mark {
+    width: 34px; height: 34px; border-radius: 10px;
+    display: grid; place-items: center; font-size: 19px;
+    background: linear-gradient(135deg, var(--blue), var(--violet));
+    box-shadow: 0 6px 18px rgba(24, 119, 242, 0.4);
+}
+.nav-links { display: flex; gap: 6px; }
+.nav-links a { padding: 8px 14px; border-radius: 10px; color: var(--muted); font-size: 14px; font-weight: 500; transition: .2s; }
+.nav-links a:hover { color: #fff; background: var(--surface-2); }
 
-        .draggable-svg-border rect {
-            width: 100%; height: 100%;
-            fill: none;
-            stroke: #3b82f6;
-            stroke-width: 2;
-            stroke-dasharray: 10 10;
-            stroke-dashoffset: 0;
-            rx: 50px; /* high border radius for pill */
-            animation: march 20s linear infinite;
-        }
+/* ---------- HERO ---------- */
+.hero { padding: 80px 0 40px; }
+.hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
 
-        .draggable-pill-wrapper:hover .draggable-svg-border rect {
-            stroke: #60a5fa;
-            stroke-width: 3;
-            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8));
-        }
+.badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 99px;
+    background: rgba(24, 119, 242, 0.12);
+    border: 1px solid rgba(24, 119, 242, 0.3);
+    color: #7fb4ff; font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em;
+}
+.badge i { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: blink 1.8s infinite; }
+@keyframes blink { 50% { opacity: 0.35; } }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #475569;
-        }
+h1 {
+    margin: 22px 0 18px;
+    font-size: clamp(2.3rem, 5.2vw, 3.8rem);
+    line-height: 1.07; font-weight: 800; letter-spacing: -0.035em;
+}
+.grad { background: linear-gradient(100deg, #5aa2ff, #a78bfa 55%, #f0abfc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lead { font-size: 1.1rem; color: var(--muted); max-width: 520px; }
 
-        /* Toast Animation */
-        #toast {
-            visibility: hidden;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+/* Sürüklenebilir hap buton */
+.install { margin-top: 36px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.pill {
+    position: relative; display: inline-flex; align-items: center; gap: 12px;
+    padding: 16px 26px; border-radius: 99px;
+    background: linear-gradient(135deg, rgba(24,119,242,.28), rgba(139,92,246,.22));
+    border: 2px dashed rgba(90, 162, 255, 0.7);
+    font-weight: 700; font-size: 16px; color: #fff;
+    cursor: grab; user-select: none;
+    box-shadow: 0 10px 40px -10px rgba(24, 119, 242, 0.6);
+    transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s, border-color .25s;
+    animation: hop 3.2s ease-in-out infinite;
+}
+.pill:hover { transform: translateY(-3px) scale(1.03); border-color: #9cc8ff; box-shadow: 0 16px 50px -8px rgba(24, 119, 242, 0.85); animation-play-state: paused; }
+.pill:active { cursor: grabbing; transform: scale(0.96); }
+.pill .fox { font-size: 22px; }
+.pill svg { width: 18px; height: 18px; color: #9cc8ff; }
+@keyframes hop { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+.hint { font-size: 13.5px; color: var(--muted); line-height: 2; }
+.hint kbd { font: 600 12px 'Inter', sans-serif; padding: 2px 8px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--line); color: #cbd5e1; }
+
+.alt-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border-radius: 12px;
+    background: var(--surface); border: 1px solid var(--line);
+    color: #cbd5e1; font: 600 13.5px 'Inter', sans-serif; cursor: pointer; transition: .2s;
+}
+.btn:hover { background: var(--surface-2); color: #fff; border-color: rgba(255,255,255,.18); transform: translateY(-1px); }
+.btn svg { width: 16px; height: 16px; }
+.btn.ok { background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.45); color: #86efac; }
+
+.touch-note {
+    display: none; margin-top: 4px; padding: 12px 14px; border-radius: 12px; max-width: 520px;
+    background: rgba(245, 158, 11, 0.09); border: 1px solid rgba(245, 158, 11, 0.28);
+    color: #fcd34d; font-size: 13px;
+}
+body.touch .touch-note { display: block; }
+body.touch .pill { cursor: pointer; }
+
+/* ---------- CANLI ÖNİZLEME PANELİ ---------- */
+.demo-wrap { position: relative; display: flex; justify-content: center; }
+.demo-wrap::before {
+    content: ""; position: absolute; inset: 8% 6%;
+    background: linear-gradient(135deg, var(--blue), var(--violet));
+    filter: blur(70px); opacity: 0.35; border-radius: 50%;
+}
+.mock {
+    position: relative; width: 320px; max-width: 100%;
+    background: rgba(17, 24, 39, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+    font-size: 13px; transform: rotate(1.5deg);
+    transition: transform .5s;
+}
+.mock:hover { transform: rotate(0deg) scale(1.02); }
+.mock-hd {
+    display: flex; align-items: center; gap: 8px; padding: 13px 15px;
+    background: linear-gradient(135deg, rgba(24,119,242,.28), rgba(139,92,246,.16));
+    border-bottom: 1px solid var(--line);
+}
+.mock-hd b { flex: 1; font-size: 14px; color: #fff; }
+.mock-hd b small { display: block; font-size: 10px; color: var(--muted); font-weight: 500; letter-spacing: .4px; }
+.mock-dots { display: flex; gap: 5px; }
+.mock-dots i { width: 9px; height: 9px; border-radius: 50%; background: #334155; }
+.mock-bd { padding: 15px; }
+.mock-row { display: flex; gap: 10px; margin-bottom: 13px; }
+.mock-f { flex: 1; }
+.mock-f span { display: block; font-size: 10px; font-weight: 600; letter-spacing: .8px; color: var(--muted); margin-bottom: 5px; }
+.mock-f div { padding: 8px 10px; border-radius: 10px; background: #0b1220; border: 1px solid #334155; color: #e4e6eb; }
+.mock-bar { height: 8px; border-radius: 99px; background: #0b1220; border: 1px solid #1e293b; overflow: hidden; }
+.mock-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--blue), var(--violet)); transition: width .5s; }
+.mock-stats { display: flex; justify-content: space-between; margin: 8px 0 12px; font-size: 11px; color: var(--muted); }
+.mock-stats b { color: #fff; }
+.mock-log {
+    height: 128px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end;
+    background: #0b1220; border: 1px solid #1e293b; border-radius: 10px; padding: 6px 9px; margin-bottom: 13px;
+    font: 11.5px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; color: #7dd3fc;
+}
+.mock-log div { padding: 3px 0; border-bottom: 1px solid rgba(51, 65, 85, .5); animation: pop .35s ease; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@keyframes pop { from { opacity: 0; transform: translateY(8px); } }
+.mock-btns { display: flex; gap: 8px; }
+.mock-btns span { flex: 1; text-align: center; padding: 10px; border-radius: 10px; font-weight: 600; color: #fff; }
+.mock-btns .go { background: var(--blue); box-shadow: 0 4px 14px rgba(24,119,242,.35); }
+.mock-btns .ps { background: #334155; }
+.mock-btns .sp { background: #7f1d1d; }
+.mock-status { margin-top: 10px; text-align: center; font-size: 11px; color: var(--muted); }
+
+/* ---------- BÖLÜM BAŞLIKLARI ---------- */
+.sec-head { text-align: center; max-width: 640px; margin: 0 auto 48px; }
+.eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--blue-2); }
+h2 { margin: 10px 0 12px; font-size: clamp(1.7rem, 3.4vw, 2.4rem); line-height: 1.15; letter-spacing: -0.025em; font-weight: 800; }
+.sec-head p { color: var(--muted); }
+
+/* ---------- KARTLAR ---------- */
+.card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 26px;
+    transition: transform .3s, border-color .3s, background .3s;
+}
+.card:hover { transform: translateY(-4px); background: var(--surface-2); border-color: rgba(90,162,255,.35); }
+
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: s; }
+.step { position: relative; }
+.step-no {
+    width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+    font-weight: 800; font-size: 17px; color: #fff; margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--blue), var(--violet));
+    box-shadow: 0 8px 20px rgba(24,119,242,.35);
+}
+.step h3 { font-size: 17px; margin-bottom: 6px; letter-spacing: -0.01em; }
+.step p { color: var(--muted); font-size: 14.5px; }
+.step kbd { font: 600 12px 'Inter', sans-serif; padding: 1px 7px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--line); color: #e2e8f0; }
+
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.feat-ic {
+    width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-size: 22px; margin-bottom: 16px;
+    background: rgba(24, 119, 242, .12); border: 1px solid rgba(24, 119, 242, .25);
+}
+.feat h3 { font-size: 16.5px; margin-bottom: 6px; letter-spacing: -0.01em; }
+.feat p { color: var(--muted); font-size: 14.5px; }
+
+/* ---------- HIZ TABLOSU ---------- */
+.speeds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.speed { text-align: center; }
+.speed .tag { display: inline-block; padding: 4px 12px; border-radius: 99px; font-size: 12px; font-weight: 700; margin-bottom: 14px; }
+.speed .big { font-size: 34px; font-weight: 800; letter-spacing: -0.03em; }
+.speed .big small { font-size: 15px; font-weight: 600; color: var(--muted); }
+.speed p { color: var(--muted); font-size: 14px; margin-top: 6px; }
+.speed.good .tag { background: rgba(34,197,94,.14); color: #86efac; border: 1px solid rgba(34,197,94,.35); }
+.speed.mid .tag { background: rgba(24,119,242,.14); color: #93c5fd; border: 1px solid rgba(24,119,242,.38); }
+.speed.risk .tag { background: rgba(245,158,11,.13); color: #fcd34d; border: 1px solid rgba(245,158,11,.38); }
+.speed.good { border-color: rgba(34,197,94,.3); }
+
+/* ---------- SSS ---------- */
+.faq { max-width: 780px; margin: 0 auto; display: grid; gap: 12px; }
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; transition: .2s; }
+details[open] { background: var(--surface-2); border-color: rgba(90,162,255,.3); }
+summary { list-style: none; cursor: pointer; padding: 18px 22px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-size: 22px; font-weight: 400; color: var(--blue-2); transition: transform .25s; }
+details[open] summary::after { transform: rotate(45deg); }
+details p { padding: 0 22px 20px; color: var(--muted); font-size: 14.5px; }
+details p code { background: var(--surface-2); padding: 1px 7px; border-radius: 6px; font-size: 13px; color: #cbd5e1; }
+
+/* ---------- UYARI ---------- */
+.notice {
+    max-width: 900px; margin: 0 auto; display: flex; gap: 16px; align-items: flex-start;
+    padding: 24px 26px; border-radius: var(--radius);
+    background: rgba(245, 158, 11, 0.07); border: 1px solid rgba(245, 158, 11, 0.28);
+}
+.notice svg { width: 26px; height: 26px; color: var(--amber); flex: none; margin-top: 2px; }
+.notice h3 { color: #fde68a; font-size: 16.5px; margin-bottom: 4px; }
+.notice p { color: #e7d6a3; font-size: 14.5px; opacity: .92; }
+
+/* ---------- FOOTER ---------- */
+footer { border-top: 1px solid var(--line); padding: 34px 0 44px; color: var(--dim); font-size: 13.5px; }
+.foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
+.foot a { color: var(--muted); transition: .2s; }
+.foot a:hover { color: #fff; }
+.foot-links { display: flex; gap: 20px; }
+
+/* ---------- TOAST ---------- */
+#toast {
+    position: fixed; left: 50%; bottom: 24px; z-index: 100;
+    transform: translate(-50%, 24px); opacity: 0; pointer-events: none;
+    display: flex; align-items: center; gap: 12px;
+    width: max-content; max-width: calc(100% - 32px);
+    padding: 14px 18px; border-radius: 16px;
+    background: #111a2e; border: 1px solid var(--line);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .55); font-size: 14px;
+    transition: .3s cubic-bezier(.34,1.56,.64,1);
+}
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+#toast .ic { width: 34px; height: 34px; flex: none; border-radius: 10px; display: grid; place-items: center; font-size: 17px; }
+#toast.info .ic { background: rgba(24,119,242,.2); }
+#toast.success .ic { background: rgba(34,197,94,.2); }
+#toast.warning .ic { background: rgba(245,158,11,.2); }
+
+/* ---------- ANİMASYON / RESPONSIVE ---------- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+@media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .steps, .features, .speeds { grid-template-columns: 1fr; }
+    .nav-links a:not(.keep) { display: none; }
+    section { padding: 52px 0; }
+    .hero { padding-top: 48px; }
+    .mock { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
+}
+</style>
 </head>
-<body class="flex items-center justify-center py-10 px-4 sm:px-6">
+<body>
 
-    <div class="w-full max-w-4xl mx-auto flex flex-col items-center justify-center gap-8 animate-slide-up">
-        
-        <!-- Header / Logo -->
-        <div class="text-center space-y-4 animate-float">
-            <a href="https://efekanerdogan.com" target="_blank" class="inline-block relative group">
-                <div class="absolute -inset-2 bg-gradient-to-r from-fb-blue to-purple-600 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
-                <img src="https://efekanerdogan.com/images/logo.png" alt="Efekan Erdogan Logo" 
-                     class="relative h-16 sm:h-20 w-auto object-contain drop-shadow-2xl transition-transform duration-300 group-hover:scale-105"
-                     onerror="this.src='https://placehold.co/300x100/1e293b/3b82f6?text=FB+Network+Araçları'">
-            </a>
+<nav>
+    <div class="wrap nav-in">
+        <a href="#top" class="brand"><span class="brand-mark">🦊</span><span>FB Network</span></a>
+        <div class="nav-links">
+            <a href="#kurulum">Kurulum</a>
+            <a href="#ozellikler">Özellikler</a>
+            <a href="#hiz">Hız Rehberi</a>
+            <a href="#sss">SSS</a>
+            <a href="https://github.com/efekanerdogan/facebooknetwork" target="_blank" rel="noopener" class="keep">GitHub</a>
+        </div>
+    </div>
+</nav>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+    <div class="wrap hero-grid">
+        <div>
+            <span class="badge"><i></i> v2.0 · Eklenti yok, kurulum yok</span>
+            <h1>Facebook ağını <span class="grad">kontrollü</span> şekilde büyüt.</h1>
+            <p class="lead">Önerilen arkadaşlar, grup üyeleri ve liste sayfalarında tek tıkla açılan; limit, hız ve duraklatma kontrolü sunan sürüklenebilir bir panel.</p>
+
+            <div class="install">
+                <a id="bm-link" class="pill" href="#" draggable="true" title="Yer imleri çubuğuna sürükleyin">
+                    <span class="fox">🦊</span>
+                    <span>FB Network Genişletici</span>
+                    <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                </a>
+                <p class="hint">Bu butonu <b>Yer İmleri Çubuğuna</b> sürükleyip bırakın &nbsp;·&nbsp; <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd></p>
+
+                <div class="alt-actions">
+                    <button class="btn" id="copy-code" type="button">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        <span>Konsol kodunu kopyala</span>
+                    </button>
+                    <button class="btn" id="copy-link" type="button">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.8 10.2a4 4 0 010 5.6l-3 3a4 4 0 01-5.6-5.6l1.5-1.5m6.6-1.2a4 4 0 010-5.6l3-3a4 4 0 115.6 5.6l-1.5 1.5"/></svg>
+                        <span>Yer imi bağlantısını kopyala</span>
+                    </button>
+                </div>
+
+                <div class="touch-note">
+                    📱 Dokunmatik cihazda sürükle-bırak çalışmaz. <b>Yer imi bağlantısını kopyala</b>, tarayıcıda herhangi bir sayfayı yer imi yap, sonra yer imini düzenleyip adresine yapıştır. Araç masaüstü Facebook arayüzü için tasarlandı.
+                </div>
+            </div>
+        </div>
+
+        <!-- Canlı simülasyon -->
+        <div class="demo-wrap" aria-hidden="true">
+            <div class="mock">
+                <div class="mock-hd">
+                    <span style="font-size:18px">🦊</span>
+                    <b>FB Network Genişletici<small>v2.0 · GÜVENLİ MOD</small></b>
+                    <div class="mock-dots"><i></i><i></i></div>
+                </div>
+                <div class="mock-bd">
+                    <div class="mock-row">
+                        <div class="mock-f"><span>LİMİT</span><div>25</div></div>
+                        <div class="mock-f" style="flex:1.5"><span>HIZ</span><div>Normal (2.5–5 sn)</div></div>
+                    </div>
+                    <div class="mock-bar"><i id="m-bar"></i></div>
+                    <div class="mock-stats"><span>Gönderilen <b id="m-count">0 / 25</b></span><span>Süre <b id="m-time">00:00</b></span></div>
+                    <div class="mock-log" id="m-log"></div>
+                    <div class="mock-btns"><span class="go">▶ Başlat</span><span class="ps">⏸</span><span class="sp">■</span></div>
+                    <div class="mock-status" id="m-status">Hazır. Limit ve hız seçip başlat.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= KURULUM ================= -->
+<section id="kurulum">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="eyebrow">Kurulum</div>
+            <h2>30 saniyede hazır</h2>
+            <p>Hiçbir eklenti veya hesap bağlantısı gerekmez. Araç tamamen tarayıcınızın içinde çalışır.</p>
+        </div>
+        <div class="steps">
+            <div class="card step reveal">
+                <div class="step-no">1</div>
+                <h3>Yer imine ekleyin</h3>
+                <p>Yukarıdaki <b>🦊 FB Network Genişletici</b> butonunu fareyle tutup yer imleri çubuğuna bırakın. Çubuk görünmüyorsa <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>.</p>
+            </div>
+            <div class="card step reveal">
+                <div class="step-no">2</div>
+                <h3>Doğru sayfaya gidin</h3>
+                <p>Facebook'a giriş yapın; <b>Önerilen Arkadaşlar</b>, bir grubun <b>Üyeler</b> sekmesi ya da "Arkadaşı ekle" butonları olan herhangi bir listeye gidin.</p>
+            </div>
+            <div class="card step reveal">
+                <div class="step-no">3</div>
+                <h3>Paneli açıp başlatın</h3>
+                <p>Yer imine tıklayın, limit ve hızı seçin, <b>▶ Başlat</b>'a basın. İstediğiniz an duraklatabilir ya da durdurabilirsiniz.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= ÖZELLİKLER ================= -->
+<section id="ozellikler">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="eyebrow">Özellikler</div>
+            <h2>Sade görünür, ayrıntıda titizdir</h2>
+            <p>v2 ile panel baştan yazıldı; hem daha kontrollü hem de Facebook sayfasından tamamen yalıtılmış çalışır.</p>
+        </div>
+        <div class="features">
+            <div class="card feat reveal"><div class="feat-ic">🪟</div><h3>Buzlu cam panel</h3><p>Facebook'un koyu temasına uyumlu, yarı saydam arayüz. Shadow DOM sayesinde sayfanın stilleri panele karışmaz.</p></div>
+            <div class="card feat reveal"><div class="feat-ic">🖐️</div><h3>Sürüklenebilir ve hatırlayan</h3><p>Paneli istediğiniz köşeye taşıyın, küçültün. Konum, limit ve hız ayarı bir sonraki açılışta hazır gelir.</p></div>
+            <div class="card feat reveal"><div class="feat-ic">⏯️</div><h3>Başlat · Duraklat · Durdur</h3><p>Çalışırken bile tam kontrol sizde. Yer imine ikinci kez tıklamak da paneli kapatır ve işlemi durdurur.</p></div>
+            <div class="card feat reveal"><div class="feat-ic">📊</div><h3>Canlı ilerleme</h3><p>İlerleme çubuğu, gönderilen sayısı, geçen süre ve eklenen kişilerin isimleri anlık olarak listelenir.</p></div>
+            <div class="card feat reveal"><div class="feat-ic">🛑</div><h3>Otomatik güvenlik freni</h3><p>Facebook bir kısıtlama uyarısı gösterirse ya da tıklamalar üst üste sonuçsuz kalırsa araç kendiliğinden durur.</p></div>
+            <div class="card feat reveal"><div class="feat-ic">♾️</div><h3>Akıllı kaydırma</h3><p>Görünen kişiler bitince sayfayı kendi indirir. Liste sonuna gelindiğinde sonsuz döngüye girmeden işlemi bitirir.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= HIZ REHBERİ ================= -->
+<section id="hiz">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="eyebrow">Hız rehberi</div>
+            <h2>Hızlı olan değil, sürdürülebilir olan kazanır</h2>
+            <p>Facebook anormal davranışı hızla fark eder. Aşağıdaki değerler güvenli kullanım için tavsiye niteliğindedir.</p>
+        </div>
+        <div class="speeds">
+            <div class="card speed good reveal"><span class="tag">YAVAŞ · ÖNERİLEN</span><div class="big">4–9 <small>sn</small></div><p>Günde <b>30–50</b> istek. Yeni ya da az kullanılan hesaplar için en güvenli seçenek.</p></div>
+            <div class="card speed mid reveal"><span class="tag">NORMAL</span><div class="big">2,5–5 <small>sn</small></div><p>Günde <b>50–100</b> istek. Aktif ve köklü hesaplar için dengeli seçenek.</p></div>
+            <div class="card speed risk reveal"><span class="tag">HIZLI · RİSKLİ</span><div class="big">1,5–3 <small>sn</small></div><p>Yalnızca kısa denemeler için. Tek seferde en fazla <b>100</b> kişiyle sınırlıdır.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= SSS ================= -->
+<section id="sss">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="eyebrow">SSS</div>
+            <h2>Sık sorulanlar</h2>
+        </div>
+        <div class="faq reveal">
+            <details>
+                <summary>Butona tıklayınca neden bir şey olmuyor?</summary>
+                <p>Sayfadaki buton yalnızca <b>sürüklemek</b> içindir. Onu yer imleri çubuğuna bırakın; paneli Facebook sekmesindeyken o yer imine tıklayarak açarsınız.</p>
+            </details>
+            <details>
+                <summary>Yer imi çalışmıyor, alternatif var mı?</summary>
+                <p>Evet. "Konsol kodunu kopyala" düğmesine basın, Facebook sekmesinde <code>F12</code> ile konsolu açıp yapıştırın ve <code>Enter</code>'a basın. Chrome yapıştırmayı engellerse önce konsola <code>allow pasting</code> yazın.</p>
+            </details>
+            <details>
+                <summary>Panel açıldı ama kimseyi eklemiyor.</summary>
+                <p>Araç sayfada "Arkadaşı ekle" / "Add friend" yazan butonları arar. Bu butonların görünür olduğu bir sayfada (örneğin Önerilen Arkadaşlar) çalıştırdığınızdan emin olun. Facebook arayüzü sık değişir; sorun sürerse GitHub'da bir <i>issue</i> açın.</p>
+            </details>
+            <details>
+                <summary>Verilerim toplanıyor mu?</summary>
+                <p>Hayır. Araç hiçbir sunucuya veri göndermez; her şey sekmenizin içinde çalışır. Sadece limit, hız ve panel konumu tarayıcınızın yerel depolamasında saklanır.</p>
+            </details>
+            <details>
+                <summary>Hesabım engellenir mi?</summary>
+                <p>Garanti verilemez. Otomatik istek göndermek Facebook'un kullanım koşullarıyla çelişebilir ve platform sert spam kontrolleri uygular. Küçük paketlerle ve yavaş hızda kullanmak riski azaltır ama ortadan kaldırmaz; sorumluluk kullanıcıya aittir.</p>
+            </details>
+            <details>
+                <summary>İşlemi nasıl durdururum?</summary>
+                <p>Panelden <b>■ Durdur</b>'a basın, <b>×</b> ile paneli kapatın ya da yer imine tekrar tıklayın. Sekmeyi kapatmak da işlemi sonlandırır.</p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<!-- ================= UYARI ================= -->
+<section style="padding-top:0">
+    <div class="wrap">
+        <div class="notice reveal">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.94 4h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"/></svg>
             <div>
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 tracking-tight">
-                    Facebook Network Genişletici
-                </h1>
-                <p class="text-fb-muted mt-2 font-medium tracking-wide text-sm sm:text-base">
-                    Otomatik Arkadaş Ekleme Aracı Kurulumu
-                </p>
+                <h3>Sorumluluk bildirimi</h3>
+                <p>Bu araç eğitim, araştırma ve iş akışını hızlandırma amacıyla paylaşılmıştır; Facebook ile bağlantısı yoktur. Kötüye kullanımdan ve platform politikalarının ihlalinden doğabilecek hesap kısıtlamaları tamamen kullanıcının sorumluluğundadır. Tanımadığınız kişilere toplu istek göndermekten kaçının.</p>
             </div>
         </div>
-
-        <div class="glass-card rounded-[2rem] w-full p-6 sm:p-10 lg:p-12">
-            
-            <!-- SECTION 1: Drag & Drop (Recommended) -->
-            <div class="text-center mb-10">
-                <div class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-[0.2em] mb-8">
-                    <svg class="w-3 h-3 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path></svg>
-                    KOLAY YÖNTEM (ÖNERİLEN)
-                </div>
-                
-                <div class="flex flex-col items-center justify-center space-y-6">
-                    
-                    <!-- Draggable Pill -->
-                    <div class="draggable-pill-wrapper group">
-                        <svg class="draggable-svg-border" xmlns="http://www.w3.org/2000/svg">
-                            <rect />
-                        </svg>
-                        <a id="bookmarklet-btn" 
-                           href="javascript:(function(){if(document.getElementById('bm-panel'))return;var ui=document.createElement('div');ui.id='bm-panel';ui.innerHTML='<div style=\'position:fixed;top:20px;right:20px;background:rgba(30,41,59,0.95);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);color:#e4e6eb;padding:20px;border-radius:16px;z-index:999999;box-shadow:0 8px 32px rgba(0,0,0,0.5);width:280px;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif;border:1px solid rgba(255,255,255,0.1);box-sizing:border-box;\'><h3 style=\'margin:0 0 15px 0;text-align:center;font-size:16px;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:10px;font-weight:600;letter-spacing:0.5px;cursor:grab;color:#ffffff !important;text-shadow:0 1px 3px rgba(0,0,0,0.5);\' title=\'Paneli sürüklemek için basılı tutun\'>🦊 FB Network Genişletici</h3><div style=\'display:flex;gap:10px;margin-bottom:12px;\'><div style=\'flex:1;\'><label style=\'font-size:11px;color:#94a3b8;display:block;margin-bottom:5px;font-weight:500;\'>LİMİT:</label><input type=\'number\' id=\'bm-limit\' value=\'50\' min=\'1\' style=\'width:100%;padding:8px;background:#0f172a;color:#e4e6eb;border:1px solid #334155;border-radius:8px;box-sizing:border-box;font-size:13px;outline:none;\'></div><div style=\'flex:1.5;\'><label style=\'font-size:11px;color:#94a3b8;display:block;margin-bottom:5px;font-weight:500;\'>HIZ:</label><select id=\'bm-hiz\' style=\'width:100%;padding:8px;background:#0f172a;color:#e4e6eb;border:1px solid #334155;border-radius:8px;box-sizing:border-box;font-size:13px;outline:none;\'><option value=\'yavas\'>Yavaş (3-7s)</option><option value=\'normal\' selected>Normal (2-4s)</option><option value=\'hizli\'>Hızlı (1-2s)</option><option value=\'cokhizli\'>Çok Hızlı</option></select></div></div><div id=\'bm-liste\' style=\'background:#0f172a;border:1px solid #334155;border-radius:8px;height:140px;overflow-y:auto;font-size:12px;padding:8px;margin-bottom:12px;color:#3b82f6;font-family:ui-monospace,SFMono-Regular,monospace;\'></div><button id=\'bm-baslat\' style=\'width:100%;padding:12px;background:#1877f2;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;margin-bottom:8px;font-size:14px;box-shadow:0 4px 12px rgba(24,119,242,0.3);transition:all 0.2s;\'>🚀 Sistemi Başlat</button><button id=\'bm-durdur\' style=\'width:100%;padding:10px;background:transparent;color:#94a3b8;border:1px solid #334155;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px;transition:all 0.2s;\'>Paneli Kapat</button><div id=\'bm-durum\' style=\'margin-top:10px;font-size:11px;text-align:center;color:#94a3b8;font-weight:500;\'>Sistem Hazır. Göreve başla!</div></div>';document.body.appendChild(ui);var style=document.createElement('style');style.innerHTML='#bm-baslat:hover{background:#166fe5;}#bm-baslat:active{transform:scale(0.97);}#bm-durdur:hover{background:#334155!important;color:#fff;}#bm-limit:focus,#bm-hiz:focus{border-color:#1877f2!important;box-shadow:0 0 0 2px rgba(24,119,242,0.2);}#bm-liste::-webkit-scrollbar{width:6px;}#bm-liste::-webkit-scrollbar-track{background:rgba(0,0,0,0.1);}#bm-liste::-webkit-scrollbar-thumb{background:#4e4f50;border-radius:4px;}';ui.appendChild(style);var aktif=false;var gonderilen=0;var durum=document.getElementById('bm-durum');var liste=document.getElementById('bm-liste');document.getElementById('bm-baslat').onclick=function(){if(aktif)return;var limit=parseInt(document.getElementById('bm-limit').value);if(isNaN(limit)||limit<=0){durum.innerText='Hata! Geçerli limit girin.';return;}aktif=true;durum.innerText='Çalışıyor... Lütfen sayfada kalın.';document.getElementById('bm-baslat').innerText='⏳ Çalışıyor...';adimAt(limit);};document.getElementById('bm-durdur').onclick=function(){aktif=false;if(document.getElementById('bm-panel')){document.body.removeChild(ui);}};function bulIsim(btn){try{var p=btn;while(p&&p.tagName!=='BODY'){p=p.parentElement;if(p&&p.querySelectorAll('img, image[role=&quot;img&quot;]').length>0&&p.querySelectorAll('div[role=&quot;button&quot;]').length<4){break;}}if(!p)p=btn.parentElement.parentElement;var imgs=p.querySelectorAll('image[role=&quot;img&quot;], img');for(var k=0;k<imgs.length;k++){var alt=imgs[k].getAttribute('aria-label')||imgs[k].getAttribute('alt');if(alt&&alt.length>2&&alt.toLowerCase().indexOf('arkadaş')===-1){return alt.replace(/adlı kullanıcının.*/i,'').replace(/profil resmi.*/i,'').trim();}}var els=p.querySelectorAll('a[role=&quot;link&quot;], span[dir=&quot;auto&quot;], h2, h3');for(var j=0;j<els.length;j++){var t=els[j].innerText?els[j].innerText.trim():'';if(t.length>2&&t.length<35&&t.indexOf('\\n')===-1){if(!t.match(/ortak|arkadaş|mutual|add|ekle|diğer|yaşıyor|şehir|ilinde|from|lives|kaldır|sil|remove|iptal|öneri|memleket|katıldı|okudu|çalışıyor/i)){return t;}}}return 'Bilinmeyen Kişi';}catch(e){return 'Bilinmeyen Kişi';}}function adimAt(limit){if(!aktif||gonderilen>=limit){durum.innerText=gonderilen>=limit?'İşlem Tamamlandı.':'Kullanıcı Durdurdu.';document.getElementById('bm-baslat').innerText='🚀 Sistemi Başlat';aktif=false;return;}var gercekButonlar=new Set();var tumElementler=document.querySelectorAll('div[role=&quot;button&quot;], span, a');for(var i=0;i<tumElementler.length;i++){var e=tumElementler[i];var txt=e.textContent?e.textContent.trim().toLowerCase():'';var aria=e.getAttribute('aria-label')?e.getAttribute('aria-label').toLowerCase().trim():'';if(txt==='arkadaşı ekle'||txt==='add friend'||aria==='arkadaşı ekle'||aria==='add friend'){var anaButon=e.closest('[role=&quot;button&quot;]')||e;if(!anaButon.hasAttribute('data-islem')&&anaButon.getBoundingClientRect().height>0){gercekButonlar.add(anaButon);}}}var btnListesi=Array.from(gercekButonlar);if(btnListesi.length===0){durum.innerText='Yeni kişiler aranıyor (Scroll)...';window.scrollTo(0,document.body.scrollHeight);var icKaydirma=document.querySelectorAll('div');for(var k=0;k<icKaydirma.length;k++){var stil=window.getComputedStyle(icKaydirma[k]);if(stil.overflowY==='auto'||stil.overflowY==='scroll'){icKaydirma[k].scrollTop=icKaydirma[k].scrollHeight;}}setTimeout(function(){adimAt(limit);},3000);return;}var hedef=btnListesi[0];var isim=bulIsim(hedef);hedef.setAttribute('data-islem','tamam');hedef.click();gonderilen++;liste.innerHTML+='<div style=\'padding:5px 0;border-bottom:1px solid #334155;display:flex;align-items:center;\'><span style=\'margin-right:6px;font-size:10px;\'>✅</span> '+gonderilen+'. '+isim+'</div>';liste.scrollTop=liste.scrollHeight;durum.innerText=gonderilen+' / '+limit+' gönderildi.';var hizSecim=document.getElementById('bm-hiz').value;var minBekle=2000,maxBekle=4000;if(hizSecim==='yavas'){minBekle=3000;maxBekle=7000;}else if(hizSecim==='hizli'){minBekle=1000;maxBekle=2000;}else if(hizSecim==='cokhizli'){minBekle=500;maxBekle=1500;}var bekle=Math.floor(Math.random()*(maxBekle-minBekle))+minBekle;setTimeout(function(){adimAt(limit);},bekle);}var isDragging=false;var offsetX,offsetY;var header=ui.querySelector('h3');header.addEventListener('mousedown',function(e){isDragging=true;header.style.cursor='grabbing';var rect=ui.getBoundingClientRect();offsetX=e.clientX-rect.left;offsetY=e.clientY-rect.top;ui.style.right='auto';ui.style.bottom='auto';ui.style.left=rect.left+'px';ui.style.top=rect.top+'px';});document.addEventListener('mousemove',function(e){if(!isDragging)return;ui.style.left=(e.clientX-offsetX)+'px';ui.style.top=(e.clientY-offsetY)+'px';});document.addEventListener('mouseup',function(){isDragging=false;header.style.cursor='grab';});})();" 
-                           class="relative inline-flex items-center justify-center gap-3 bg-slate-800/80 hover:bg-slate-700/80 text-white font-semibold py-4 px-8 rounded-full text-sm sm:text-base transition-colors z-10"
-                           onclick="showCustomToast('Bu butona tıklamayın! Farenizle basılı tutup tarayıcınızın <b>Yer İmleri (Sık Kullanılanlar)</b> çubuğuna sürükleyip bırakın.', 'warning'); return false;">
-                            <span class="text-xl">🦊</span>
-                            <span>FB Network Genişletici</span>
-                            <svg class="w-5 h-5 text-blue-400 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
-                        </a>
-                    </div>
-                    
-                    <!-- Instructions -->
-                    <div class="space-y-2 mt-4 text-center">
-                        <p class="text-slate-300 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
-                            Üstteki butonu farenizle tutup tarayıcınızın <span class="font-bold text-white border-b border-blue-500/50 pb-0.5">Yer İmleri Çubuğuna</span> sürükleyip bırakın.
-                        </p>
-                        <p class="text-slate-400 text-xs sm:text-sm">
-                            Daha sonra Facebook'a girin ve kaydettiğiniz bu yer imine tıklayın.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="relative flex items-center py-6">
-                <div class="flex-grow border-t border-slate-700/50"></div>
-                <span class="flex-shrink-0 mx-4 text-slate-500 text-xs font-semibold tracking-widest uppercase">Veya Alternatif Kurulum</span>
-                <div class="flex-grow border-t border-slate-700/50"></div>
-            </div>
-
-            <div class="text-center mt-6">
-                
-                <button onclick="copyCode()" id="copyBtn" class="group relative inline-flex items-center justify-center gap-3 bg-fb-blue hover:bg-fb-hover text-white font-bold py-4 px-10 rounded-2xl mb-10 text-sm sm:text-[15px] tracking-wide transition-all duration-300 transform hover:-translate-y-1 shadow-[0_0_30px_-5px_rgba(24,119,242,0.4)] hover:shadow-[0_0_40px_5px_rgba(24,119,242,0.6)] overflow-hidden">
-                    <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out"></div>
-                    <svg id="copyIcon" class="w-5 h-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                    <span id="copyText" class="relative z-10">KODU KOPYALA</span>
-                </button>
-
-                <!-- Steps Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-                    <div class="glass-step rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold text-xl shadow-[0_0_15px_rgba(59,130,246,0.2)]">1</div>
-                        <p class="text-[13px] sm:text-[14px] text-slate-300 leading-relaxed">Yukarıdaki butona basarak <strong class="text-white">kodu hafızaya</strong> alın.</p>
-                    </div>
-                    <div class="glass-step rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold text-xl shadow-[0_0_15px_rgba(59,130,246,0.2)]">2</div>
-                        <p class="text-[13px] sm:text-[14px] text-slate-300 leading-relaxed">Facebook sayfasına gidin ve <strong class="text-white">F12</strong> tuşu ile geliştirici konsolunu açın.</p>
-                    </div>
-                    <div class="glass-step rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold text-xl shadow-[0_0_15px_rgba(59,130,246,0.2)]">3</div>
-                        <p class="text-[13px] sm:text-[14px] text-slate-300 leading-relaxed">Kodu yapıştırıp <strong class="text-white">(CTRL+V)</strong> ardından <strong class="text-white">Enter'a</strong> basın.</p>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-
-        <!-- NASIL KULLANILIR SECTION -->
-        <div class="glass-card rounded-[2rem] w-full p-6 sm:p-10 lg:p-12">
-            <div class="text-center mb-8">
-                <div class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold tracking-[0.2em] mb-4">
-                    <svg class="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    KULLANIM REHBERİ
-                </div>
-                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">Nasıl Kullanılır?</h2>
-                <p class="text-slate-400 text-sm sm:text-base">Aracı Facebook üzerinde çalıştırmak çok basittir. Adımları takip edin:</p>
-            </div>
-
-            <div class="space-y-6 sm:space-y-8">
-                <!-- Step 1 -->
-                <div class="flex gap-4 sm:gap-6 items-start">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0 shadow-[0_0_15px_rgba(168,85,247,0.2)]">1</div>
-                    <div class="pt-1">
-                        <h4 class="text-white font-semibold text-base sm:text-lg mb-1">Doğru Sayfaya Gidin</h4>
-                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">Facebook hesabınıza giriş yapın. Ardından arkadaş eklemek istediğiniz bir gruba, sayfaya veya <strong>"Önerilen Arkadaşlar"</strong> listesine gidin.</p>
-                    </div>
-                </div>
-                
-                <!-- Step 2 -->
-                <div class="flex gap-4 sm:gap-6 items-start">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0 shadow-[0_0_15px_rgba(168,85,247,0.2)]">2</div>
-                    <div class="pt-1">
-                        <h4 class="text-white font-semibold text-base sm:text-lg mb-1">Aracı Çalıştırın</h4>
-                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">Yer imlerine eklediğiniz <strong>"🦊 FB Network Genişletici"</strong> butonuna tıklayın (Veya F12 konsoluna kodu yapıştırıp Enter'a basın). Aracın kontrol paneli ekranda açılacaktır.</p>
-                    </div>
-                </div>
-
-                <!-- Step 3 -->
-                <div class="flex gap-4 sm:gap-6 items-start">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0 shadow-[0_0_15px_rgba(168,85,247,0.2)]">3</div>
-                    <div class="pt-1">
-                        <h4 class="text-white font-semibold text-base sm:text-lg mb-1">Ayarları Yapın ve Başlatın</h4>
-                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">Panelden eklemek istediğiniz kişi sayısını (LİMİT) ve ekleme hızını seçin. Ardından <strong>"🚀 Sistemi Başlat"</strong> butonuna tıklayın ve arkanıza yaslanın!</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-8 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200 text-sm leading-relaxed flex gap-3 items-start">
-                <svg class="w-5 h-5 shrink-0 text-amber-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                <p><strong>Önemli Not:</strong> Facebook'un spam algılamaması için hızı genellikle "Normal" veya "Yavaş" tutmanız ve günlük limitleri aşmamanız önerilir.</p>
-            </div>
-        </div>
-        
-        <!-- Footer -->
-        <p class="text-slate-500 text-xs text-center pb-6 font-medium">
-            © 2026 Efekan Erdoğan. Tüm hakları saklıdır.
-        </p>
     </div>
+</section>
 
-    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] flex items-center p-4 w-full max-w-xs sm:max-w-md text-slate-200 bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 pointer-events-none">
-        <div id="toastIconContainer" class="inline-flex items-center justify-center shrink-0 w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400">
-            <!-- Icon changes dynamically -->
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+</main>
+
+<footer>
+    <div class="wrap foot">
+        <span>© 2026 Efekan Erdoğan · MIT Lisansı</span>
+        <div class="foot-links">
+            <a href="https://efekanerdogan.com" target="_blank" rel="noopener">Web sitesi</a>
+            <a href="https://github.com/efekanerdogan/facebooknetwork" target="_blank" rel="noopener">GitHub</a>
         </div>
-        <div id="toastMessage" class="ms-3 text-sm font-medium leading-relaxed"></div>
     </div>
+</footer>
 
-    <script>
-        // Custom Toast Function (replaces standard browser alert)
-        let toastTimeout;
-        function showCustomToast(message, type = 'info') {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            const iconContainer = document.getElementById('toastIconContainer');
-            
-            toastMessage.innerHTML = message;
-            
-            // Set styles based on type
-            if(type === 'success') {
-                iconContainer.className = 'inline-flex items-center justify-center shrink-0 w-10 h-10 rounded-xl bg-green-500/20 text-green-400';
-                iconContainer.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
-            } else if(type === 'warning') {
-                iconContainer.className = 'inline-flex items-center justify-center shrink-0 w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400';
-                iconContainer.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>';
-            } else {
-                iconContainer.className = 'inline-flex items-center justify-center shrink-0 w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400';
-                iconContainer.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
-            }
+<div id="toast" role="status" aria-live="polite"><div class="ic"></div><div class="msg"></div></div>
 
-            // Show
-            toast.classList.add('show');
-            
-            // Auto hide
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 4000);
+<!-- =====================================================================
+     YER İMİ KAYNAK KODU (okunabilir hali).
+     Sayfa yüklenirken sıkıştırılıp "javascript:" bağlantısına çevrilir.
+     Kurallar: satır içi // yorum kullanma, her ifadeyi ; ile bitir.
+     ===================================================================== -->
+<script type="text/plain" id="bm-src">
+(function(){
+var HOST_ID="fbn-host";
+if(document.getElementById(HOST_ID)){if(window.__fbnClose){window.__fbnClose();}return;}
+var MAX_LIMIT=100;
+var MAX_IDLE=6;
+var MAX_FAILS=3;
+var SPEEDS={yavas:[4000,9000],normal:[2500,5000],hizli:[1500,3000]};
+var SPEED_NAMES=[["yavas","Yavaş (4-9 sn)"],["normal","Normal (2.5-5 sn)"],["hizli","Hızlı (1.5-3 sn)"]];
+var ADD_LABELS=["arkadas ekle","arkadasi ekle","add friend"];
+var BLOCK_RE=/gecici olarak (engellen|kisitlan)|temporarily (blocked|restricted)|bu ozelligi su anda kullanamazsin|you can.t use this feature right now|try again later|daha sonra tekrar dene/i;
+var SKIP_RE=/ortak|mutual|arkadas|friend|\badd\b|ekle|diger|yasiyor|sehir|ilinde|\bfrom\b|\blives\b|kaldir|\bsil\b|remove|iptal|oneri|memleket|katildi|okudu|calisiyor/;
+
+function norm(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/ı/g,"i").trim();}
+function rand(a,b){return Math.floor(Math.random()*(b-a))+a;}
+function h(tag,cls,txt){var e=document.createElement(tag);if(cls){e.className=cls;}if(txt!=null){e.textContent=txt;}return e;}
+function fmt(sec){var m=Math.floor(sec/60),s=sec%60;return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;}
+var store={
+get:function(){try{return JSON.parse(localStorage.getItem("fbn-v2"))||{};}catch(e){return {};}},
+set:function(o){try{localStorage.setItem("fbn-v2",JSON.stringify(o));}catch(e){}}
+};
+
+var CSS=[
+":host{all:initial}",
+"*{box-sizing:border-box}",
+".p{position:fixed;top:20px;right:20px;width:300px;z-index:2147483647;font:13px/1.4 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#e4e6eb;background:rgba(17,24,39,.9);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);border:1px solid rgba(255,255,255,.12);border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.55);overflow:hidden}",
+".hd{display:flex;align-items:center;gap:8px;padding:12px 14px;cursor:grab;user-select:none;touch-action:none;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(135deg,rgba(24,119,242,.28),rgba(139,92,246,.16))}",
+".hd.drag{cursor:grabbing}",
+".logo{font-size:18px}",
+".tt{flex:1;font-weight:700;font-size:14px;color:#fff}",
+".tt small{display:block;font-weight:500;font-size:10px;color:#94a3b8;letter-spacing:.4px}",
+".ib{width:26px;height:26px;border:0;border-radius:8px;background:rgba(255,255,255,.08);color:#cbd5e1;cursor:pointer;font-size:14px;line-height:1;padding:0}",
+".ib:hover{background:rgba(255,255,255,.18);color:#fff}",
+".bd{padding:14px}",
+".p.min .bd{display:none}",
+".row{display:flex;gap:10px;margin-bottom:12px}",
+".f{flex:1}",
+".f.w{flex:1.5}",
+"label{display:block;font-size:10px;font-weight:600;letter-spacing:.8px;color:#94a3b8;margin-bottom:5px}",
+"input,select{width:100%;padding:8px 10px;background:#0b1220;color:#e4e6eb;border:1px solid #334155;border-radius:10px;font-family:inherit;font-size:13px;outline:none}",
+"input:focus,select:focus{border-color:#1877f2;box-shadow:0 0 0 3px rgba(24,119,242,.25)}",
+"input:disabled,select:disabled{opacity:.5}",
+".pr{height:8px;border-radius:99px;background:#0b1220;overflow:hidden;border:1px solid #1e293b}",
+".pb{height:100%;width:0;background:linear-gradient(90deg,#1877f2,#8b5cf6);transition:width .35s ease}",
+".st{display:flex;justify-content:space-between;margin:8px 0 12px;font-size:11px;color:#94a3b8}",
+".st b{color:#fff;font-weight:700}",
+".lg{height:130px;overflow-y:auto;background:#0b1220;border:1px solid #1e293b;border-radius:10px;padding:6px 8px;margin-bottom:12px;font:11.5px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:#7dd3fc}",
+".lg div{padding:3px 0;border-bottom:1px solid rgba(51,65,85,.5)}",
+".lg .w{color:#fbbf24}",
+".lg .e{color:#f87171}",
+".lg .m{color:#64748b}",
+".bt{display:flex;gap:8px}",
+"button.b{flex:1;padding:10px;border:0;border-radius:10px;font-family:inherit;font-weight:600;font-size:13px;cursor:pointer;color:#fff;transition:transform .15s,background .2s,opacity .2s}",
+"button.b:active{transform:scale(.96)}",
+"button.b[disabled]{opacity:.35;cursor:not-allowed}",
+".go{background:#1877f2;box-shadow:0 4px 14px rgba(24,119,242,.35)}",
+".go:hover{background:#166fe5}",
+".ps{background:#334155;flex:0 0 44px!important}",
+".ps:hover{background:#475569}",
+".sp{background:#7f1d1d;flex:0 0 44px!important}",
+".sp:hover{background:#991b1b}",
+".ss{margin-top:10px;text-align:center;font-size:11px;color:#94a3b8}",
+".ss.ok{color:#4ade80}",
+".ss.bad{color:#f87171}",
+".ft{margin-top:8px;text-align:center;font-size:10px;color:#64748b}"
+].join("");
+
+var saved=store.get();
+var host=h("div");
+host.id=HOST_ID;
+var root=host.attachShadow({mode:"open"});
+var style=h("style");
+style.textContent=CSS;
+root.appendChild(style);
+
+var panel=h("div","p");
+var hd=h("div","hd");
+hd.appendChild(h("span","logo","🦊"));
+var tt=h("div","tt","FB Network Genişletici");
+tt.appendChild(h("small",null,"v2.0 · GÜVENLİ MOD"));
+hd.appendChild(tt);
+var btnMin=h("button","ib","–");
+btnMin.title="Küçült";
+var btnX=h("button","ib","×");
+btnX.title="Kapat";
+hd.appendChild(btnMin);
+hd.appendChild(btnX);
+panel.appendChild(hd);
+
+var bd=h("div","bd");
+var row=h("div","row");
+var f1=h("div","f");
+f1.appendChild(h("label",null,"LİMİT (en çok "+MAX_LIMIT+")"));
+var limitEl=h("input");
+limitEl.type="number";
+limitEl.min="1";
+limitEl.max=String(MAX_LIMIT);
+limitEl.value=String(saved.limit||25);
+f1.appendChild(limitEl);
+var f2=h("div","f w");
+f2.appendChild(h("label",null,"HIZ"));
+var speedEl=h("select");
+for(var si=0;si<SPEED_NAMES.length;si++){
+var op=h("option",null,SPEED_NAMES[si][1]);
+op.value=SPEED_NAMES[si][0];
+speedEl.appendChild(op);
+}
+speedEl.value=SPEEDS[saved.speed]?saved.speed:"yavas";
+f2.appendChild(speedEl);
+row.appendChild(f1);
+row.appendChild(f2);
+bd.appendChild(row);
+
+var pr=h("div","pr");
+var bar=h("div","pb");
+pr.appendChild(bar);
+bd.appendChild(pr);
+var st=h("div","st");
+var s1=h("span",null,"Gönderilen ");
+var countEl=h("b",null,"0 / 0");
+s1.appendChild(countEl);
+var s2=h("span",null,"Süre ");
+var timeEl=h("b",null,"00:00");
+s2.appendChild(timeEl);
+st.appendChild(s1);
+st.appendChild(s2);
+bd.appendChild(st);
+
+var lg=h("div","lg");
+bd.appendChild(lg);
+
+var bt=h("div","bt");
+var btnGo=h("button","b go","▶ Başlat");
+var btnPs=h("button","b ps","⏸");
+btnPs.title="Duraklat / Devam";
+var btnSp=h("button","b sp","■");
+btnSp.title="Durdur";
+btnPs.disabled=true;
+btnSp.disabled=true;
+bt.appendChild(btnGo);
+bt.appendChild(btnPs);
+bt.appendChild(btnSp);
+bd.appendChild(bt);
+
+var ss=h("div","ss","Hazır. Limit ve hız seçip başlat.");
+bd.appendChild(ss);
+bd.appendChild(h("div","ft","Öneri: günde 50-100 istek, Yavaş/Normal hız."));
+panel.appendChild(bd);
+root.appendChild(panel);
+document.body.appendChild(host);
+
+if(typeof saved.x==="number"&&typeof saved.y==="number"){
+panel.style.right="auto";
+panel.style.left=Math.min(Math.max(0,saved.x),Math.max(0,window.innerWidth-300))+"px";
+panel.style.top=Math.min(Math.max(0,saved.y),Math.max(0,window.innerHeight-60))+"px";
+}
+
+function persist(){
+var o={limit:parseInt(limitEl.value,10)||25,speed:speedEl.value};
+var x=parseFloat(panel.style.left),y=parseFloat(panel.style.top);
+if(!isNaN(x)&&!isNaN(y)){o.x=x;o.y=y;}
+store.set(o);
+}
+function log(text,cls){
+var d=h("div",cls||null,text);
+lg.appendChild(d);
+while(lg.childNodes.length>200){lg.removeChild(lg.firstChild);}
+lg.scrollTop=lg.scrollHeight;
+}
+function setStatus(text,cls){ss.textContent=text;ss.className="ss"+(cls?" "+cls:"");}
+
+var running=false,paused=false,sent=0,limit=0,idle=0,fails=0;
+var timer=null,clock=null,startedAt=0,pausedAt=0,pausedTotal=0;
+
+function render(){
+countEl.textContent=sent+" / "+limit;
+bar.style.width=(limit?Math.min(100,sent/limit*100):0)+"%";
+}
+function elapsed(){
+var end=paused?pausedAt:Date.now();
+return Math.max(0,Math.floor((end-startedAt-pausedTotal)/1000));
+}
+function setControls(){
+btnGo.disabled=running;
+btnPs.disabled=!running;
+btnSp.disabled=!running;
+limitEl.disabled=running;
+speedEl.disabled=running;
+btnPs.textContent=paused?"▶":"⏸";
+btnGo.textContent=running?"⏳ Çalışıyor":"▶ Başlat";
+}
+
+function isAdd(el){
+var a=norm(el.getAttribute("aria-label"));
+var t=norm(el.textContent);
+return ADD_LABELS.indexOf(a)!==-1||ADD_LABELS.indexOf(t)!==-1;
+}
+function findButtons(){
+var found=[];
+function scan(sel){
+var nodes=document.querySelectorAll(sel);
+for(var i=0;i<nodes.length;i++){
+var n=nodes[i];
+if(!isAdd(n)){continue;}
+var b=n.closest("[role=button]")||n;
+if(b.hasAttribute("data-fbn")||b.getAttribute("aria-disabled")==="true"){continue;}
+var r=b.getBoundingClientRect();
+if(r.height<=0||r.width<=0){continue;}
+if(found.indexOf(b)===-1){found.push(b);}
+}
+}
+scan("div[role=button],a[role=button],[aria-label]");
+if(!found.length){scan("span");}
+return found;
+}
+function nameOf(btn){
+try{
+var p=btn;
+for(var i=0;i<8&&p.parentElement;i++){
+p=p.parentElement;
+if(p.querySelector("img,image")&&p.querySelectorAll("[role=button]").length<4){break;}
+}
+var imgs=p.querySelectorAll("img,image");
+for(var k=0;k<imgs.length;k++){
+var alt=imgs[k].getAttribute("aria-label")||imgs[k].getAttribute("alt");
+if(alt&&alt.length>2&&!SKIP_RE.test(norm(alt))){
+var clean=alt.replace(/adlı kullanıcının.*/i,"").replace(/profil resmi.*/i,"").trim();
+if(clean){return clean;}
+}
+}
+var els=p.querySelectorAll("a[role=link],span[dir=auto],h2,h3");
+for(var j=0;j<els.length;j++){
+var t=(els[j].innerText||"").trim();
+if(t.length>2&&t.length<35&&t.indexOf("\n")===-1&&!SKIP_RE.test(norm(t))){return t;}
+}
+}catch(e){}
+return "Bilinmeyen kişi";
+}
+function blocked(){
+var d=document.querySelectorAll("[role=dialog],[role=alertdialog]");
+for(var i=0;i<d.length;i++){
+if(BLOCK_RE.test(norm(d[i].innerText))){return true;}
+}
+return false;
+}
+function scrollAll(){
+window.scrollTo(0,document.body.scrollHeight);
+var divs=document.querySelectorAll("div");
+for(var i=0;i<divs.length;i++){
+var o=window.getComputedStyle(divs[i]).overflowY;
+if((o==="auto"||o==="scroll")&&divs[i].scrollHeight>divs[i].clientHeight+50){divs[i].scrollTop=divs[i].scrollHeight;}
+}
+}
+
+function finish(msg,cls){
+running=false;
+paused=false;
+clearTimeout(timer);
+clearInterval(clock);
+timeEl.textContent=fmt(elapsed());
+setControls();
+setStatus(msg,cls||"ok");
+log("— "+msg,cls==="bad"?"e":"m");
+}
+
+function tick(){
+if(!running){return;}
+if(paused){timer=setTimeout(tick,500);return;}
+if(sent>=limit){finish("Tamamlandı: "+sent+" istek gönderildi ✓");return;}
+if(blocked()){finish("Facebook uyarı gösterdi. Güvenlik için durduruldu.","bad");return;}
+var list=findButtons();
+if(!list.length){
+idle++;
+if(idle>MAX_IDLE){finish("Listenin sonuna gelindi. "+sent+" istek gönderildi.");return;}
+setStatus("Yeni kişiler aranıyor ("+idle+"/"+MAX_IDLE+")…");
+scrollAll();
+timer=setTimeout(tick,3000);
+return;
+}
+idle=0;
+var btn=list[0];
+var name=nameOf(btn);
+btn.setAttribute("data-fbn","1");
+try{btn.scrollIntoView({block:"center",behavior:"smooth"});}catch(e){}
+timer=setTimeout(function(){
+if(!running){return;}
+btn.click();
+sent++;
+log(sent+". "+name);
+render();
+setStatus(sent+" / "+limit+" gönderildi…");
+setTimeout(function(){
+if(!running){return;}
+if(btn.isConnected&&isAdd(btn)){
+fails++;
+log("⚠ Tıklama sonuç vermedi ("+fails+"/"+MAX_FAILS+")","w");
+if(fails>=MAX_FAILS){finish("Üst üste sonuçsuz tıklama. Güvenlik için durduruldu.","bad");}
+}else{
+fails=0;
+}
+},1800);
+var sp=SPEEDS[speedEl.value]||SPEEDS.yavas;
+timer=setTimeout(tick,rand(sp[0],sp[1]));
+},350+rand(0,400));
+}
+
+function start(){
+if(running){return;}
+var n=parseInt(limitEl.value,10);
+if(isNaN(n)||n<1){setStatus("Geçerli bir limit girin.","bad");return;}
+if(n>MAX_LIMIT){n=MAX_LIMIT;limitEl.value=String(n);log("Limit en çok "+MAX_LIMIT+" olabilir.","w");}
+limit=n;sent=0;idle=0;fails=0;
+running=true;paused=false;pausedTotal=0;
+startedAt=Date.now();
+persist();
+render();
+setControls();
+setStatus("Çalışıyor… Bu sekmeyi açık tutun.");
+log("Başladı: limit "+limit+", hız "+speedEl.value,"m");
+clock=setInterval(function(){timeEl.textContent=fmt(elapsed());},1000);
+tick();
+}
+function togglePause(){
+if(!running){return;}
+if(paused){
+pausedTotal+=Date.now()-pausedAt;
+paused=false;
+setStatus("Devam ediyor…");
+log("— devam","m");
+}else{
+paused=true;
+pausedAt=Date.now();
+setStatus("Duraklatıldı.");
+log("— duraklatıldı","m");
+}
+setControls();
+}
+function stopNow(){if(running){finish("Kullanıcı durdurdu. "+sent+" istek gönderildi.");}}
+function closeAll(){
+running=false;
+clearTimeout(timer);
+clearInterval(clock);
+persist();
+host.remove();
+try{delete window.__fbnClose;}catch(e){window.__fbnClose=null;}
+}
+window.__fbnClose=closeAll;
+
+btnGo.addEventListener("click",start);
+btnPs.addEventListener("click",togglePause);
+btnSp.addEventListener("click",stopNow);
+btnX.addEventListener("click",closeAll);
+btnMin.addEventListener("click",function(){
+panel.classList.toggle("min");
+btnMin.textContent=panel.classList.contains("min")?"+":"–";
+});
+limitEl.addEventListener("change",persist);
+speedEl.addEventListener("change",persist);
+
+var dragging=false,dx=0,dy=0;
+hd.addEventListener("pointerdown",function(e){
+if(e.target.tagName==="BUTTON"){return;}
+dragging=true;
+var r=panel.getBoundingClientRect();
+dx=e.clientX-r.left;
+dy=e.clientY-r.top;
+panel.style.right="auto";
+panel.style.left=r.left+"px";
+panel.style.top=r.top+"px";
+hd.classList.add("drag");
+try{hd.setPointerCapture(e.pointerId);}catch(err){}
+});
+hd.addEventListener("pointermove",function(e){
+if(!dragging){return;}
+var x=Math.min(Math.max(0,e.clientX-dx),window.innerWidth-panel.offsetWidth);
+var y=Math.min(Math.max(0,e.clientY-dy),window.innerHeight-hd.offsetHeight);
+panel.style.left=x+"px";
+panel.style.top=y+"px";
+});
+function endDrag(){
+if(!dragging){return;}
+dragging=false;
+hd.classList.remove("drag");
+persist();
+}
+hd.addEventListener("pointerup",endDrag);
+hd.addEventListener("pointercancel",endDrag);
+
+limit=parseInt(limitEl.value,10)||0;
+render();
+})();
+</script>
+
+<script>
+(function () {
+    'use strict';
+
+    /* ---------- Yer imi kodunu üret ---------- */
+    var raw = document.getElementById('bm-src').textContent;
+    var code = raw.split('\n').map(function (l) { return l.trim(); }).filter(Boolean).join(' ');
+    var bookmarklet = 'javascript:' + encodeURIComponent(code);
+
+    var link = document.getElementById('bm-link');
+    link.setAttribute('href', bookmarklet);
+
+    /* ---------- Toast ---------- */
+    var toast = document.getElementById('toast');
+    var toastTimer;
+    function showToast(msg, type) {
+        type = type || 'info';
+        var icons = { info: 'ℹ️', success: '✅', warning: '👆' };
+        toast.className = type;
+        toast.querySelector('.ic').textContent = icons[type];
+        toast.querySelector('.msg').textContent = msg;
+        void toast.offsetWidth;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 4200);
+    }
+
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        showToast('Bu butona tıklamayın; fareyle tutup yer imleri çubuğuna sürükleyin.', 'warning');
+    });
+
+    /* ---------- Dokunmatik cihaz algısı ---------- */
+    if (window.matchMedia && window.matchMedia('(hover: none)').matches) {
+        document.body.classList.add('touch');
+    }
+
+    /* ---------- Kopyalama ---------- */
+    function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            return navigator.clipboard.writeText(text).catch(function () { return legacyCopy(text); });
         }
+        return legacyCopy(text);
+    }
+    function legacyCopy(text) {
+        return new Promise(function (resolve, reject) {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+            document.body.appendChild(ta);
+            ta.select();
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (err) { /* yoksay */ }
+            document.body.removeChild(ta);
+            ok ? resolve() : reject(new Error('copy failed'));
+        });
+    }
 
-        // Copy Code Functionality
-        function copyCode() {
-            const btn = document.getElementById('bookmarklet-btn');
-            // Decode the href safely to maintain exact bookmarklet logic
-            const code = btn.getAttribute('href');
-            
-            const copyBtn = document.getElementById('copyBtn');
-            const copyText = document.getElementById('copyText');
-            const copyIcon = document.getElementById('copyIcon');
-            
-            const originalText = copyText.innerText;
-            const originalIcon = copyIcon.outerHTML;
-            
-            // We use standard clipboard writeText fallback
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(code).then(handleSuccess).catch(err => {
-                    fallbackCopyTextToClipboard(code);
-                });
-            } else {
-                fallbackCopyTextToClipboard(code);
-            }
+    function wireCopy(btnId, getText, okLabel, okToast) {
+        var btn = document.getElementById(btnId);
+        var label = btn.querySelector('span');
+        var original = label.textContent;
+        btn.addEventListener('click', function () {
+            copyText(getText()).then(function () {
+                label.textContent = okLabel;
+                btn.classList.add('ok');
+                showToast(okToast, 'success');
+                setTimeout(function () { label.textContent = original; btn.classList.remove('ok'); }, 2400);
+            }, function () {
+                showToast('Kopyalama başarısız oldu. Lütfen tarayıcı iznini kontrol edin.', 'warning');
+            });
+        });
+    }
+    wireCopy('copy-code', function () { return code; },
+        'Kopyalandı!', 'Kod kopyalandı. Facebook sekmesinde F12 → Console → yapıştır → Enter.');
+    wireCopy('copy-link', function () { return bookmarklet; },
+        'Kopyalandı!', 'Bağlantı kopyalandı. Yer imi oluşturup adres alanına yapıştırın.');
 
-            function handleSuccess() {
-                // UI Changes for success
-                copyText.innerText = 'KOPYALANDI!';
-                copyIcon.outerHTML = '<svg id="copyIcon" class="w-5 h-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
-                
-                // Change button color to green temporarily
-                copyBtn.classList.remove('bg-fb-blue', 'hover:bg-fb-hover', 'shadow-[0_0_30px_-5px_rgba(24,119,242,0.4)]');
-                copyBtn.classList.add('bg-green-600', 'hover:bg-green-500', 'shadow-[0_0_30px_-5px_rgba(22,163,74,0.4)]');
-                
-                showCustomToast('Kod başarıyla panoya kopyalandı! Şimdi Facebook sekmesinde konsola yapıştırabilirsiniz.', 'success');
-                
-                setTimeout(() => {
-                    copyText.innerText = originalText;
-                    document.getElementById('copyIcon').outerHTML = originalIcon;
-                    copyBtn.classList.add('bg-fb-blue', 'hover:bg-fb-hover', 'shadow-[0_0_30px_-5px_rgba(24,119,242,0.4)]');
-                    copyBtn.classList.remove('bg-green-600', 'hover:bg-green-500', 'shadow-[0_0_30px_-5px_rgba(22,163,74,0.4)]');
-                }, 2500);
-            }
+    /* ---------- Scroll reveal ---------- */
+    var items = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+            });
+        }, { threshold: 0.12 });
+        items.forEach(function (el, i) { el.style.transitionDelay = (i % 3) * 80 + 'ms'; io.observe(el); });
+    } else {
+        items.forEach(function (el) { el.classList.add('in'); });
+    }
+
+    /* ---------- Canlı panel simülasyonu ---------- */
+    var names = ['Ayşe Demir', 'Mehmet Kaya', 'Zeynep Arslan', 'Can Yıldız', 'Elif Şahin', 'Burak Aydın',
+                 'Selin Çelik', 'Emre Koç', 'Deniz Öztürk', 'Merve Polat', 'Kerem Aksoy', 'Ceren Güneş'];
+    var LIMIT = 25;
+    var bar = document.getElementById('m-bar');
+    var count = document.getElementById('m-count');
+    var time = document.getElementById('m-time');
+    var logEl = document.getElementById('m-log');
+    var status = document.getElementById('m-status');
+    var n = 0, secs = 0, clock;
+
+    function pad(v) { return (v < 10 ? '0' : '') + v; }
+    function resetDemo() {
+        n = 0; secs = 0;
+        logEl.innerHTML = '';
+        bar.style.width = '0';
+        count.textContent = '0 / ' + LIMIT;
+        time.textContent = '00:00';
+        status.textContent = 'Çalışıyor… Bu sekmeyi açık tutun.';
+    }
+    function step() {
+        n++;
+        var d = document.createElement('div');
+        d.textContent = n + '. ' + names[(n - 1) % names.length];
+        logEl.appendChild(d);
+        while (logEl.children.length > 6) { logEl.removeChild(logEl.firstChild); }
+        bar.style.width = (n / LIMIT * 100) + '%';
+        count.textContent = n + ' / ' + LIMIT;
+        if (n >= LIMIT) {
+            status.textContent = 'Tamamlandı: ' + LIMIT + ' istek gönderildi ✓';
+            clearInterval(clock);
+            setTimeout(start, 3500);
         }
-
-        // Fallback for older browsers or non-secure contexts
-        function fallbackCopyTextToClipboard(text) {
-            var textArea = document.createElement("textarea");
-            textArea.value = text;
-            
-            // Avoid scrolling to bottom
-            textArea.style.top = "0";
-            textArea.style.left = "0";
-            textArea.style.position = "fixed";
-
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-
-            try {
-                var successful = document.execCommand('copy');
-                if(successful) {
-                    // Manually trigger the success visuals
-                    document.getElementById('copyBtn').click(); 
-                } else {
-                    showCustomToast('Kopyalama başarısız oldu. Lütfen manuel olarak kopyalayın.', 'warning');
-                }
-            } catch (err) {
-                showCustomToast('Kopyalama başarısız oldu: ' + err, 'warning');
-            }
-
-            document.body.removeChild(textArea);
-        }
-    </script>
+    }
+    function start() {
+        resetDemo();
+        clearInterval(clock);
+        clock = setInterval(function () {
+            secs++;
+            time.textContent = pad(Math.floor(secs / 60)) + ':' + pad(secs % 60);
+        }, 1000);
+        var timer = setInterval(function () {
+            if (n >= LIMIT) { clearInterval(timer); return; }
+            step();
+        }, 900);
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        n = 12;
+        for (var i = 0; i < 6; i++) { var d = document.createElement('div'); d.textContent = (7 + i) + '. ' + names[6 + i]; logEl.appendChild(d); }
+        bar.style.width = '48%';
+        count.textContent = '12 / ' + LIMIT;
+        time.textContent = '00:36';
+        status.textContent = 'Çalışıyor… Bu sekmeyi açık tutun.';
+    } else {
+        start();
+    }
+})();
+</script>
 </body>
 </html>

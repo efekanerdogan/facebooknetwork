@@ -1,69 +1,75 @@
-Harika bir fikir. "🚀 Kurulum Adımları" bölümünün hemen altına, kullanıcıların projeyi doğrudan deneyimleyebileceği veya detaylarını görebileceği canlı demo bağlantısını ekledim.
-
-İşte metnin güncellenmiş hali:
-
----
-
 # 🦊 Facebook Network Genişletici
 
-Bu proje, Facebook üzerinde hedeflediğiniz gruplardaki, sayfalardaki veya "Önerilen Arkadaşlar" listesindeki kişileri **otomatik olarak eklemenizi** sağlayan, kullanımı kolay ve premium tasarımlı bir "Bookmarklet" (Yer İmi Betiği) aracıdır.
+Facebook'ta **Önerilen Arkadaşlar**, grup üyeleri ve benzeri listelerdeki kişilere kontrollü şekilde arkadaşlık isteği gönderen, kurulum gerektirmeyen bir **Bookmarklet** (yer imi betiği) aracı.
+
+**Canlı kurulum sayfası:** https://efekanerdogan.github.io/facebooknetworkgeni-letici/
 
 ---
 
-## ✨ Özellikler
+## ✨ Özellikler (v2.0)
 
-* **Buzlu Cam (Glassmorphism) Tasarımı:** Facebook'un karanlık moduna entegre olan şık ve modern, yarı saydam kontrol paneli.
-* **Sürüklenebilir UI:** Paneli ekran üzerinde dilediğiniz köşeye özgürce taşıyabilme özelliği.
-* **Hız ve Limit Kontrolü:** İsteğinize göre ekleme hızını (Yavaş, Normal, Hızlı) ve kişi limitini saniyeler içinde belirleme.
-* **Anti-Spam Koruması:** Facebook'un bot algoritmalarına takılmamak için tıklamalar arası rastgele saniye gecikmeleri (random delay).
-* **Gerçek Zamanlı Takip:** Eklenen kişilerin isimlerini ve işlem sürecini anlık olarak liste üzerinden görebilme.
-* **Otomatik Scroll:** Sayfadaki görünen kişiler bittiğinde otomatik olarak aşağı inip yeni kişileri tarama.
-
----
-
-## 🚀 Kurulum ve Demo
-
-Aracı tarayıcınıza eklemek saniyeler sürer ve hiçbir eklenti kurulumu gerektirmez.
-
-* **Canlı Demo & Kurulum Sayfası:** [Projeyi Buradan İncele ve Kur](https://efekanerdogan.github.io/facebooknetworkgeni-letici/)
-
-**Kurulum Adımları:**
-
-1. Yukarıdaki bağlantıdan kurulum sayfasına gidin.
-2. Ekranda gördüğünüz mavi **"🦊 FB Network Genişletici"** hap (pill) butonuna farenizle basılı tutun.
-3. Fareyi bırakmadan tarayıcınızın **Yer İmleri Çubuğuna (Bookmarks Bar)** sürükleyip bırakın.
-
-*(Eğer yer imleri çubuğunu göremiyorsanız `CTRL + SHIFT + B` kısayoluyla görünür yapabilirsiniz.)*
+- **Buzlu cam panel:** Facebook'un koyu temasına uyumlu, yarı saydam arayüz. **Shadow DOM** kullandığı için Facebook'un stilleri panele karışmaz.
+- **Sürüklenebilir ve hatırlayan:** Paneli istediğin köşeye taşı, küçült. Konum, limit ve hız ayarı bir sonraki açılışta hazır gelir.
+- **Başlat · Duraklat · Durdur:** Çalışırken tam kontrol sende. Yer imine ikinci kez tıklamak paneli kapatır ve işlemi durdurur.
+- **Canlı ilerleme:** İlerleme çubuğu, gönderilen sayısı, geçen süre ve eklenen kişilerin isimleri.
+- **Hız profilleri:** Yavaş (4–9 sn), Normal (2,5–5 sn), Hızlı (1,5–3 sn) aralığında rastgele bekleme. Tek seferde en fazla **100** istek.
+- **Otomatik güvenlik freni:** Facebook bir kısıtlama uyarısı gösterirse ya da tıklamalar üst üste 3 kez sonuçsuz kalırsa araç kendiliğinden durur.
+- **Akıllı kaydırma:** Görünen kişiler bitince sayfayı kendi indirir; liste sonuna gelince sonsuz döngüye girmeden bitirir.
+- **Türkçe + İngilizce arayüz desteği:** "Arkadaşı ekle" ve "Add friend" butonları algılanır.
+- **Gizlilik:** Hiçbir sunucuya veri gönderilmez. Yalnızca limit, hız ve panel konumu tarayıcının yerel depolamasında tutulur.
 
 ---
 
-## 🎮 Nasıl Kullanılır?
+## 🚀 Kurulum
 
-1. **Facebook'a Girin:** Facebook hesabınıza giriş yapın.
-2. **Hedef Belirleyin:** Arkadaş eklemek istediğiniz **Önerilen Arkadaşlar**, **Grup Üyeleri** veya **Herhangi bir sayfa listesine** gidin.
-3. **Aracı Çalıştırın:** Tarayıcınızın yer imleri çubuğuna kaydettiğiniz **"🦊 FB Network Genişletici"** butonuna tıklayın.
-4. **Ayarları Yapın:** Ekranda beliren şık panelden:
-* **LİMİT:** Kaç kişiye istek gönderileceğini yazın (Örn: 50).
-* **HIZ:** Gönderim hızını seçin. (Spam'e düşmemek için "Normal" veya "Yavaş" seçeneği önerilir).
+1. [Kurulum sayfasını](https://efekanerdogan.github.io/facebooknetworkgeni-letici/) açın.
+2. **🦊 FB Network Genişletici** butonunu fareyle tutup tarayıcınızın **Yer İmleri Çubuğuna** sürükleyin. (Çubuk görünmüyorsa `Ctrl + Shift + B`.)
 
+**Alternatifler:**
 
-5. **Ateşleyin:** **"🚀 Sistemi Başlat"** butonuna tıklayın ve bırakın sistem sizin için tüm işlemleri yapsın! İşlem bitene kadar o sekmeyi açık tutmanız yeterlidir.
+- **Konsol:** Sayfadaki *Konsol kodunu kopyala* düğmesine basın, Facebook sekmesinde `F12` → *Console* → yapıştırın → `Enter`. Chrome yapıştırmayı engellerse önce `allow pasting` yazın.
+- **Mobil / dokunmatik:** *Yer imi bağlantısını kopyala* düğmesiyle bağlantıyı kopyalayıp tarayıcıda yeni bir yer imi oluşturun ve adres alanına yapıştırın. Araç masaüstü Facebook arayüzü için tasarlanmıştır.
 
 ---
 
-## ⚠️ Önemli Uyarılar (DİKKAT)
+## 🎮 Kullanım
+
+1. Facebook'a giriş yapın ve **Önerilen Arkadaşlar**, grup **Üyeler** sekmesi ya da "Arkadaşı ekle" butonları olan bir listeye gidin.
+2. Yer imine tıklayın; panel açılır.
+3. **Limit** ve **Hız** seçin (Yavaş/Normal önerilir) ve **▶ Başlat**'a basın.
+4. İşlem bitene kadar sekmeyi açık tutun. Dilediğiniz an **⏸** ile duraklatın ya da **■** ile durdurun.
+
+---
+
+## 🛠️ Geliştirme
+
+Proje tek dosyadan oluşur: [`index.html`](index.html).
+
+- Kurulum sayfasının HTML/CSS'i ve canlı önizleme simülasyonu `index.html` içindedir.
+- Bookmarklet'in **okunabilir kaynağı** `<script type="text/plain" id="bm-src">` bloğundadır. Sayfa yüklenirken satırları sıkıştırılıp `javascript:` bağlantısına çevrilir, yani elle minify etmeye gerek yoktur.
+- Bu bloğa yazarken: satır içi `//` yorum kullanmayın, her ifadeyi `;` ile bitirin (satırlar boşlukla birleştirilir).
+- Yerelde denemek için herhangi bir statik sunucu yeterlidir:
+  ```bash
+  npx serve .
+  ```
+
+Facebook arayüzü sık değişir. Araç çalışmayı bırakırsa `findButtons()` ve `nameOf()` fonksiyonlarındaki seçicileri güncellemek genellikle yeterlidir.
+
+---
+
+## ⚠️ Önemli Uyarılar
 
 > [!WARNING]
-> **Hesap Güvenliği:** Facebook'un spam engelleme algoritmaları serttir. Tek seferde 500 kişiye "Çok Hızlı" seçeneğiyle istek atmak hesabınızın engellenmesine yol açabilir.
+> **Hesap güvenliği:** Facebook'un spam algoritmaları serttir. Otomatik istek göndermek platformun kullanım koşullarıyla çelişebilir ve hesabın kısıtlanmasına yol açabilir. Garanti verilemez.
 
 > [!TIP]
-> **Tavsiye Edilen Kullanım:** Günlük olarak küçük paketler (örn: 50-100 istek) halinde ve "Normal/Yavaş" hızında işlem yapmanız, organik bir kullanıcı gibi görünmenizi sağlayacaktır.
+> **Tavsiye edilen kullanım:** Günde 50–100 istek, "Yavaş" veya "Normal" hızda ve küçük paketler halinde.
 
 > [!NOTE]
-> **Sorumluluk:** Bu araç tamamen eğitim, araştırma ve iş akışını hızlandırma amaçlı tasarlanmıştır. Aracın kötüye kullanımından ve Facebook politikalarının ihlalinden doğabilecek hesap kısıtlamaları tamamen kullanıcının sorumluluğundadır.
+> **Sorumluluk:** Bu araç eğitim, araştırma ve iş akışını hızlandırma amacıyla paylaşılmıştır; Facebook ile bağlantısı yoktur. Kötüye kullanımdan ve politika ihlallerinden doğabilecek tüm sonuçlar kullanıcıya aittir.
 
 ---
 
-## 👨‍💻 Geliştirici & Tasarım
+## 👨‍💻 Geliştirici
 
-**Efekan Erdoğan** tarafından "Premium" arayüz standartlarına uygun olarak kodlanmış ve tasarlanmıştır. Tüm hakları saklıdır.
+**Efekan Erdoğan** · [efekanerdogan.com](https://efekanerdogan.com) · [MIT Lisansı](LICENSE)
