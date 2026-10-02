@@ -2,7 +2,7 @@
 
 Facebook'ta **Önerilen Arkadaşlar**, grup üyeleri ve benzeri listelerdeki kişilere kontrollü şekilde arkadaşlık isteği gönderen, kurulum gerektirmeyen bir **Bookmarklet** (yer imi betiği) aracı.
 
-**Canlı kurulum sayfası:** https://efekanerdogan.github.io/facebooknetwork/
+**Canlı kurulum sayfası:** https://github.com/efekanerdogan/facebooknetwork
 
 ---
 
@@ -22,7 +22,7 @@ Facebook'ta **Önerilen Arkadaşlar**, grup üyeleri ve benzeri listelerdeki ki�
 
 ## 🚀 Kurulum
 
-1. [Kurulum sayfasını](https://efekanerdogan.github.io/facebooknetwork/) açın.
+1. [Kurulum sayfasını](https://github.com/efekanerdogan/facebooknetwork) açın.
 2. **🦊 FB Network Genişletici** butonunu fareyle tutup tarayıcınızın **Yer İmleri Çubuğuna** sürükleyin. (Çubuk görünmüyorsa `Ctrl + Shift + B`.)
 
 **Alternatifler:**
